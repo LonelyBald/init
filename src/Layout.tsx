@@ -1,19 +1,19 @@
-import { View, Text, StyleSheet } from "react-native";
+import React from "react";
+import { View, StyleSheet } from "react-native";
 import { Header } from "./components/Header";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { AuthorizationPage } from "./pages/AuthorizationPage";
-import { Home } from "./pages/Home";
-import header from "react-native/Libraries/NewAppScreen/components/Header";
-import { NotificationsComponent } from "./components/NotificationsComponent";
-import { MapPage } from "./pages/MapPage";
+import { Home } from "./pages/HomePage";
 
 const Stack = createStackNavigator();
-export const Layout = () => {
+
+interface LayoutProps {}
+
+export const Layout: React.FC<LayoutProps> = () => {
   return (
     <View style={styles.layout}>
       <Header />
-      {/*<MapPage />*/}
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Authorization">
           <Stack.Screen
@@ -24,7 +24,7 @@ export const Layout = () => {
           <Stack.Screen
             name="Home"
             component={Home}
-            options={{ headerLeft: null, headerShown: false }}
+            options={{ headerShown: false }}
           />
         </Stack.Navigator>
       </NavigationContainer>

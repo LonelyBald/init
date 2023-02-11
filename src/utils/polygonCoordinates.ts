@@ -1,6 +1,5 @@
 import coords from "../geo-boundaries.json";
 import flattendeep from "lodash.flattendeep";
-import flatten from "flatten";
 
 const coordinates = coords.features
   .map((g) => g.geometry)
@@ -14,9 +13,6 @@ export const result = coordinates.map((coord) =>
   })
 );
 
-export const flat = flatten(result);
-// console.log(result);
+export const flattenDeep = flattendeep(result);
 
-// export const flattenDeep = flattendeep(result);
-//
-// console.log(flattenDeep);
+console.log(flattenDeep);
