@@ -7,11 +7,16 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useState } from "react";
+import React, { useState } from "react";
 import { emailValidate, passwordValidate } from "../utils/validation";
 import { HidePassSVG } from "../../assets/svgs/HidePassSVG";
 import { ShowPasswordSVG } from "../../assets/svgs/ShowPasswordSVG";
-export const AuthorizationPage = ({ navigation }) => {
+import { NavigationStackProp } from "react-navigation-stack";
+export interface PropsType {
+  navigation: NavigationStackProp;
+}
+
+export const AuthorizationPage: React.FC<PropsType> = ({ navigation }) => {
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const [passVisible, setPassVisible] = useState(false);

@@ -13,7 +13,19 @@ import { useCallback } from "react";
 import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";
 
+interface DataJSONType {
+  year: string;
+  car: string;
+  color: string;
+  model: string;
+}
+interface OpenURLButtonType {
+  url: string;
+  children: string;
+}
+
 const supportedURL = "https://docs.expo.dev/versions/latest/sdk/notifications/";
+const data = dataJSON.data;
 const shareDocument = async () => {
   try {
     await Share.share({
@@ -40,9 +52,7 @@ const saveDocument = async () => {
     console.error(error);
   }
 };
-
-const data = dataJSON.data;
-const Item = ({ year, car, model, color }) => (
+const Item = ({ year, car, model, color }: DataJSONType) => (
   <View style={styles.item}>
     <Text>{year}</Text>
     <Text>{car}</Text>
@@ -53,7 +63,7 @@ const Item = ({ year, car, model, color }) => (
     <Button title="From app in system" onPress={shareDocument} />
   </View>
 );
-const OpenURLButton = ({ url, children }) => {
+const OpenURLButton = ({ url, children }: OpenURLButtonType) => {
   const handlePress = useCallback(async () => {
     const supported = await Linking.canOpenURL(url);
 

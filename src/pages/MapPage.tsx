@@ -1,6 +1,6 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import MapView, { Polygon } from "react-native-maps";
-import { flat, result } from "../utils/polygonCoordinates";
+import { flattenDeep } from "../utils/polygonCoordinates";
 export const MapPage = () => {
   return (
     <View style={styles.container}>
@@ -9,7 +9,7 @@ export const MapPage = () => {
           strokeColor="blue"
           // fillColor="#BEE3F8"
           strokeWidth={2}
-          coordinates={flat}
+          coordinates={flattenDeep}
           onPress={() => console.log("fea")}
         />
         {/*<Polygon*/}
