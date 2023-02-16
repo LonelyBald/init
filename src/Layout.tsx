@@ -5,6 +5,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { AuthorizationPage } from "./pages/AuthorizationPage";
 import { Home } from "./pages/HomePage";
+import { Autoload } from "./pages/Autoload";
+import { SelectMediaFromCore } from "./components/SelectMediaFromCore";
+import { MapPage } from "./pages/MapPage";
 
 const Stack = createStackNavigator();
 
@@ -14,20 +17,22 @@ export const Layout: React.FC<LayoutProps> = () => {
   return (
     <View style={styles.layout}>
       <Header />
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Authorization">
-          <Stack.Screen
-            name="Войти"
-            component={AuthorizationPage}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            options={{ headerShown: false }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <MapPage />
+      <SelectMediaFromCore />
+      {/*<NavigationContainer>*/}
+      {/*  <Stack.Navigator initialRouteName="Authorization">*/}
+      {/*    <Stack.Screen*/}
+      {/*      name="Войти"*/}
+      {/*      component={AuthorizationPage}*/}
+      {/*      options={{ headerShown: false }}*/}
+      {/*    />*/}
+      {/*    <Stack.Screen*/}
+      {/*      name="Home"*/}
+      {/*      component={Home}*/}
+      {/*      options={{ headerShown: false }}*/}
+      {/*    />*/}
+      {/*  </Stack.Navigator>*/}
+      {/*</NavigationContainer>*/}
     </View>
   );
 };

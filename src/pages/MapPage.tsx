@@ -1,56 +1,65 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text, Pressable } from "react-native";
 import MapView, { Polygon } from "react-native-maps";
-import { flattenDeep } from "../utils/polygonCoordinates";
+import { flattenDeep, result } from "../utils/polygonCoordinates";
+import { useState } from "react";
+
 export const MapPage = () => {
+  const coordsKZ = {
+    latitude: 48.0196,
+    longitude: 66.9237,
+    latitudeDelta: 43,
+    longitudeDelta: 43,
+  };
+  const [mapRegion, setMapRegion] = useState(coordsKZ);
+
+  const handlePolygonPress = (coordinates) => {
+    const center = coordinates.reduce(
+      (acc, cur) => {
+        acc.latitude += cur.latitude;
+        acc.longitude += cur.longitude;
+        return acc;
+      },
+      { latitude: 0, longitude: 0 }
+    );
+    center.latitude /= coordinates.length;
+    center.longitude /= coordinates.length;
+
+    const newRegion = {
+      latitude: center.latitude,
+      longitude: center.longitude,
+      latitudeDelta: 10,
+      longitudeDelta: 10,
+    };
+    setMapRegion(newRegion);
+  };
+
+  const polygons = result.map((coordinates, index) => {
+    return (
+      <Polygon
+        key={index}
+        strokeColor="blue"
+        strokeWidth={2}
+        coordinates={coordinates}
+        onPress={() => handlePolygonPress(coordinates)}
+      />
+    );
+  });
+
   return (
     <View style={styles.container}>
-      <MapView style={styles.map}>
-        <Polygon
-          strokeColor="blue"
-          // fillColor="#BEE3F8"
-          strokeWidth={2}
-          coordinates={flattenDeep}
-          onPress={() => console.log("fea")}
-        />
-        {/*<Polygon*/}
-        {/*  strokeColor="blue"*/}
-        {/*  fillColor="#BEE3F8"*/}
-        {/*  strokeWidth={2}*/}
-        {/*  coordinates={result[1]}*/}
-        {/*/>*/}
-        {/*<Polygon*/}
-        {/*  strokeColor="blue"*/}
-        {/*  fillColor="#BEE3F8"*/}
-        {/*  strokeWidth={2}*/}
-        {/*  coordinates={result[2]}*/}
-        {/*/>*/}
-        {/*<Polygon*/}
-        {/*  strokeColor="blue"*/}
-        {/*  fillColor="#BEE3F8"*/}
-        {/*  strokeWidth={2}*/}
-        {/*  coordinates={result[3]}*/}
-        {/*/>*/}
-        {/*<Polygon*/}
-        {/*  strokeColor="blue"*/}
-        {/*  fillColor="#BEE3F8"*/}
-        {/*  strokeWidth={2}*/}
-        {/*  coordinates={result[4]}*/}
-        {/*/>*/}
-        {/*<Polygon*/}
-        {/*  strokeColor="blue"*/}
-        {/*  fillColor="#BEE3F8"*/}
-        {/*  strokeWidth={2}*/}
-        {/*  coordinates={result[5]}*/}
-        {/*/>*/}
-        {/*<Polygon strokeColor="blue" strokeWidth={2} coordinates={result[6]} />*/}
-        {/*<Polygon strokeColor="blue" strokeWidth={2} coordinates={result[7]} />*/}
-        {/*<Polygon strokeColor="blue" strokeWidth={2} coordinates={result[8]} />*/}
-        {/*<Polygon strokeColor="blue" strokeWidth={2} coordinates={result[9]} />*/}
-        {/*<Polygon strokeColor="blue" strokeWidth={2} coordinates={result[10]} />*/}
-        {/*<Polygon strokeColor="blue" strokeWidth={2} coordinates={result[11]} />*/}
-        {/*<Polygon strokeColor="blue" strokeWidth={2} coordinates={result[12]} />*/}
-        {/*<Polygon strokeColor="blue" strokeWidth={2} coordinates={result[13]} />*/}
-        {/*<Polygon strokeColor="blue" strokeWidth={2} coordinates={result[14]} />*/}
+      <MapView style={styles.map} region={mapRegion}>
+        <View style={styles.zoomContainer}>
+          <Pressable
+            style={styles.buttonZoom}
+            onPress={() => setMapRegion(coordsKZ)}
+          >
+            <Text style={styles.action}>-</Text>
+          </Pressable>
+          <Pressable style={styles.buttonZoom}>
+            <Text style={styles.action}>+</Text>
+          </Pressable>
+        </View>
+        {polygons}
       </MapView>
     </View>
   );
@@ -66,5 +75,22 @@ const styles = StyleSheet.create({
   map: {
     width: "100%",
     height: "100%",
+  },
+  zoomContainer: {
+    flexDirection: "column",
+  },
+  buttonZoom: {
+    width: 40,
+    height: 40,
+    backgroundColor: "grey",
+    marginTop: 15,
+    marginLeft: 15,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  action: {
+    fontSize: 35,
+    color: "white",
   },
 });

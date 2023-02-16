@@ -22,7 +22,7 @@ export const NotificationsComponent = () => {
     );
 
     Notifications.addNotificationReceivedListener((notification) => {
-      setNotification(notification);
+      return setNotification(notification);
     });
     // Notifications.addNotificationReceivedListener((notification) => {
     //   setNotification(notification);

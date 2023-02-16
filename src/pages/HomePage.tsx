@@ -7,6 +7,7 @@ import {
   Button,
   Alert,
   Share,
+  TextInput,
 } from "react-native";
 import dataJSON from "../data.json";
 import { useCallback } from "react";
